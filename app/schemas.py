@@ -19,4 +19,16 @@ class Post(PostBase):
 
 class UserCreate(BaseModel):
     email : EmailStr
+<<<<<<< HEAD
     password :  str
+=======
+    password :  str
+
+class UserOut(BaseModel):
+    id : int
+    email : EmailStr
+    created_at : datetime
+    
+    class Config:
+        orm_mode = True
+>>>>>>> 0815ff361e1ecc162849136dcd0b6593b74e6540

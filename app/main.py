@@ -7,7 +7,11 @@ from pydantic import BaseModel
 import psycopg2
 from psycopg2.extras import RealDictCursor
 import time
+<<<<<<< HEAD
 from . import models , schemas
+=======
+from . import models , schemas , utils
+>>>>>>> 0815ff361e1ecc162849136dcd0b6593b74e6540
 from sqlalchemy.orm import Session
 from .database import engine , SessionLocal ,get_db
 
@@ -49,7 +53,11 @@ async def root():
 def get_posts():
     cursor.execute("""SELECT * FROM posts""")
     posts = cursor.fetchall()
+<<<<<<< HEAD
     print(posts)
+=======
+    # print(posts)
+>>>>>>> 0815ff361e1ecc162849136dcd0b6593b74e6540
     return  posts
 
 @app.post("/posts",status_code=status.HTTP_201_CREATED,response_model=schemas.Post)
@@ -113,11 +121,31 @@ def update_post(id:int , updated_post :schemas.PostCreate, db : Session = Depend
     return  post_query.first()
 
 
+<<<<<<< HEAD
 @app.post("/users",status_code=status.HTTP_201_CREATED,response_model=schemas.Post)
 def create_user(user: schemas.UserCreate , db: Session= Depends(get_db)):
 
+=======
+@app.post("/users",status_code=status.HTTP_201_CREATED,response_model=schemas.UserOut)
+def create_user(user: schemas.UserCreate , db: Session= Depends(get_db)):
+
+
+        hashed_password = utils.hash(user.password)  #hash the password user.password
+        user.password = hashed_password
+>>>>>>> 0815ff361e1ecc162849136dcd0b6593b74e6540
         new_user = models.User(**user.dict()) 
         db.add(new_user)
         db.commit()
         db.refresh(new_user)
+<<<<<<< HEAD
         return  new_user
+=======
+
+        return  new_user
+
+# @app.get("/users",status_code= status.HTTP_200_OK,response_model=schemas.UserCreate)
+# def get_user(db: Session= Depends(get_db)):
+#     my_posts = db.query(models.User).all()
+#     return my_posts
+
+>>>>>>> 0815ff361e1ecc162849136dcd0b6593b74e6540
